@@ -9,9 +9,28 @@
   "categories": [
     "Other"
   ],
-  "activationEvents": [],
-  "main": "./out/extension.js",
+  "activationEvents": [
+    "onView:heroView"
+  ],
   "contributes": {
+    "viewsContainers": {
+      "activitybar": [
+        {
+          "id": "heroActivityBar",
+          "title": "♥",
+          "icon": "assets/icon.svg"
+        }
+      ]
+    },
+    "views": {
+      "heroActivityBar": [
+        {
+          "id": "heroView",
+          "name": "操作列表",
+          "contextualTitle": "操作列表"
+        }
+      ]
+    },
     "commands": [
       {
         "command": "hero-extension.helloWorld",
@@ -19,6 +38,7 @@
       }
     ]
   },
+  "main": "./out/extension.js",
   "scripts": {
     "vscode:prepublish": "yarn run compile",
     "compile": "tsc -p ./",
@@ -28,14 +48,17 @@
     "test": "vscode-test"
   },
   "devDependencies": {
-    "@types/vscode": "^1.101.0",
     "@types/mocha": "^10.0.10",
     "@types/node": "20.x",
+    "@types/vscode": "^1.101.0",
     "@typescript-eslint/eslint-plugin": "^8.31.1",
     "@typescript-eslint/parser": "^8.31.1",
-    "eslint": "^9.25.1",
-    "typescript": "^5.8.3",
     "@vscode/test-cli": "^0.0.10",
-    "@vscode/test-electron": "^2.5.2"
+    "@vscode/test-electron": "^2.5.2",
+    "eslint": "^9.25.1",
+    "typescript": "^5.8.3"
+  },
+  "dependencies": {
+    "region-core": "^11.11.2"
   }
 }
