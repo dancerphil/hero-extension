@@ -16,14 +16,14 @@ export class TreeItem extends vscode.TreeItem {
 }
 
 export const addAction = ({command, callback}: Action) => {
-  const context = getContext()
+  const context = getContext();
   if (command.command.startsWith('hero.')) {
     const disposable = vscode.commands.registerCommand(command.command, callback);
     context.subscriptions.push(disposable);
   }
 
-  addTreeItem(new TreeItem(command.title, command))
-}
+  addTreeItem(new TreeItem(command.title, command));
+};
 
 export class TreeDataProvider implements vscode.TreeDataProvider<TreeItem> {
   getTreeItem(element: TreeItem): vscode.TreeItem | Thenable<vscode.TreeItem> {

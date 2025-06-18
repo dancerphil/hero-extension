@@ -9,9 +9,6 @@
   "categories": [
     "Other"
   ],
-  "activationEvents": [
-    "onView:heroView"
-  ],
   "contributes": {
     "viewsContainers": {
       "activitybar": [
@@ -26,6 +23,7 @@
       "heroActivityBar": [
         {
           "id": "heroView",
+          "icon": "assets/icon.svg",
           "name": "操作列表",
           "contextualTitle": "操作列表"
         }
@@ -45,13 +43,18 @@
     "watch": "tsc -watch -p ./",
     "pretest": "yarn run compile && yarn run lint",
     "lint": "eslint src",
-    "test": "vscode-test"
+    "test": "vscode-test",
+    "rebuild": "electron-rebuild --version 35.5.1 -f -w better-sqlite3"
   },
   "dependencies": {
+    "@vscode/sqlite3": "^5.1.8-vscode",
+    "better-sqlite3": "^11.10.0",
     "globby": "^14.1.0",
-    "lodash": "^4.17.21"
+    "lodash": "^4.17.21",
+    "sqlite-vec": "^0.1.7-alpha.2"
   },
   "devDependencies": {
+    "@types/better-sqlite3": "^7.6.13",
     "@types/lodash": "^4.17.18",
     "@types/mocha": "^10.0.10",
     "@types/node": "20.x",
@@ -60,6 +63,7 @@
     "@typescript-eslint/parser": "^8.31.1",
     "@vscode/test-cli": "^0.0.10",
     "@vscode/test-electron": "^2.5.2",
+    "electron-rebuild": "^3.2.9",
     "eslint": "^9.25.1",
     "typescript": "^5.8.3"
   }
