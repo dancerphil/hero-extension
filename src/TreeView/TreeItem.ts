@@ -1,6 +1,7 @@
 import * as vscode from 'vscode';
 import {getContext} from "../regions/context";
 import {addTreeItem, getTreeItems} from "../regions/treeItems";
+import {Action} from "../types";
 
 export class TreeItem extends vscode.TreeItem {
   constructor(
@@ -8,18 +9,13 @@ export class TreeItem extends vscode.TreeItem {
       public readonly command?: vscode.Command
   ) {
     super(label, vscode.TreeItemCollapsibleState.None);
-    this.description = command?.description || '';
+    // this.description = command?.description || '';
   }
 
   iconPath = new vscode.ThemeIcon('notebook-execute');
 }
 
-interface Params {
-  command: vscode.Command;
-  callback?: () => void;
-}
-
-export const addAction = ({command, callback}: Params) => {
+export const addAction = ({command, callback}: Action) => {
   const context = getContext()
   if (command.command.startsWith('hero.')) {
     const disposable = vscode.commands.registerCommand(command.command, callback);
@@ -34,7 +30,7 @@ export class TreeDataProvider implements vscode.TreeDataProvider<TreeItem> {
     return element;
   }
 
-  getChildren(element?: TreeItem): vscode.ProviderResult<MyTreeItem[]> {
+  getChildren(element?: TreeItem): vscode.ProviderResult<TreeItem[]> {
     return getTreeItems();
   }
 }

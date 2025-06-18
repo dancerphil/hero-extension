@@ -1,5 +1,6 @@
 import vscode from "vscode";
 import {getSavedMessage, setSavedMessage} from "../regions/savedMessage";
+import {Action} from "../types";
 
 const showSavedMessage = async () => {
     const message = getSavedMessage()
@@ -23,11 +24,11 @@ const showSavedMessage = async () => {
     }
 };
 
-export const showSavedMessageAction = {
+export const showSavedMessageAction: Action = {
     command: {
         command: 'hero.showSavedMessage',
         title: '保存问候',
-        description: '输入然后输出',
     },
+    description: '输入然后输出',
     callback: showSavedMessage
 }

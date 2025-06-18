@@ -1,6 +1,6 @@
 type Fn<T> = (value: T) => T;
 
-export const createRegion = <T>(initialValue: T) => {
+export const createRegion = <T>(initialValue?: T) => {
     let value = initialValue;
     return {
         get: () => value,
