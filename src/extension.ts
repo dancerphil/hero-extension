@@ -5,8 +5,11 @@ import {addAction} from "./TreeView/TreeItem";
 import {metaAction} from "./actions/meta";
 import {openSettingsAction} from "./actions/openSettings";
 import {showSavedMessageAction} from "./actions/showSavedMessage";
-import {getFilesAction} from "./actions/getFiles";
-import {sqliteAction} from "./actions/sqlite";
+import {getFilesAction} from "./actions/indexingFiles";
+import {embeddingAction} from "./actions/embedding";
+import {sqliteDropAction} from "./actions/sqliteDrop";
+import {sqliteInsertAction} from "./actions/sqliteInsert";
+import {sqliteQueryAction} from "./actions/sqliteQuery";
 
 export function activate(context: vscode.ExtensionContext) {
     console.log('hero-extension 启动完毕');
@@ -15,7 +18,10 @@ export function activate(context: vscode.ExtensionContext) {
     addAction(openSettingsAction);
     addAction(showSavedMessageAction);
     addAction(getFilesAction);
-    addAction(sqliteAction);
+    addAction(embeddingAction);
+    addAction(sqliteDropAction);
+    addAction(sqliteInsertAction);
+    addAction(sqliteQueryAction);
     registerTreeView();
 }
 

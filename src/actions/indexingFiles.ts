@@ -2,6 +2,7 @@ import vscode from "vscode";
 import {globby} from "globby";
 import {maxBy} from "lodash";
 import {Action} from "../types";
+import {getCwd} from "../utils/getCwd";
 
 export const getFilesAction: Action = {
     command: {
@@ -12,12 +13,7 @@ export const getFilesAction: Action = {
     callback: async () => {
         vscode.window.showInformationMessage('开始扫描');
         try {
-            const workspaceFolders = vscode.workspace.workspaceFolders
-            const cwd = workspaceFolders ? workspaceFolders[0].uri.fsPath : undefined;
-            if (!cwd) {
-                vscode.window.showErrorMessage('没有找到工作区文件夹');
-                return;
-            }
+            const cwd = getCwd();
             const results = await globby([
                 'packages/cli/**/*',
                 'packages/client/**/*',
@@ -30,7 +26,7 @@ export const getFilesAction: Action = {
             ], {
                 cwd,
                 gitignore: true,
-            })
+            });
 
             if (!results) {
                 vscode.window.showErrorMessage('没有找到任何文件');
@@ -44,4 +40,4 @@ export const getFilesAction: Action = {
             vscode.window.showErrorMessage('获取文件失败: ' + (e as Error).message);
         }
     }
-}
+};
