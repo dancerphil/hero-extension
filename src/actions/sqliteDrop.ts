@@ -1,13 +1,12 @@
-import {getDb} from '../sqlite/db';
-import {prepareCodeContextItemsDrop, prepareEmbeddingsDrop, prepareVersionedFilesDrop} from "../sqlite/getPrepared";
+import {getDbInstance} from '../sqlite/dbInstance';
 import vscode from "vscode";
 
 const sqliteDrop = async() => {
-    const db = getDb();
+    const {db, embeddings, versionedFiles, codeContextItems} = getDbInstance();
 
-    prepareEmbeddingsDrop(db).run();
-    prepareVersionedFilesDrop(db).run();
-    prepareCodeContextItemsDrop(db).run();
+    embeddings.drop.run();
+    versionedFiles.drop.run();
+    codeContextItems.drop.run();
 
     vscode.window.showInformationMessage(`Drop 完毕`);
 

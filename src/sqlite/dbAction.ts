@@ -1,37 +1,21 @@
 import {FileInsert} from "../types/sqlite";
-import {getDb} from "./db";
-import {
-    prepareCodeContextItemsInsert,
-    prepareEmbeddingsInsert,
-    prepareVersionedFilesInsert
-} from "./getPrepared";
+import {getDbInstance} from "./dbInstance";
 
 interface ParamsProcessFileInsert {
     fileList: FileInsert[]
 }
 
-// interface Options {
-//     batchSize?: number;
-//     skipUnchangedFiles?: boolean;
-//     onProgress?: (processed: number, total: number) => void;
-// }
-
 export const processFileInsert = ({fileList}: ParamsProcessFileInsert) => {
-    // const { batchSize = 50, skipUnchangedFiles = true, onProgress } = options;
+    const instance = getDbInstance();
 
-    const db = getDb();
-    const versionedFilesInsert = prepareVersionedFilesInsert(db);
-    const codeContextItemsInsert = prepareCodeContextItemsInsert(db);
-    const embeddingsInsert = prepareEmbeddingsInsert(db);
-
-    const transaction = db.transaction(() => {
+    const transaction = instance.db.transaction(() => {
         for (const file of fileList) {
             const { versionedFile, codeContentItems } = file;
             const { corpusName, corpusRelativePath, contentHash } = versionedFile;
             console.log(`处理文件: ${corpusRelativePath}`);
 
             try {
-                const versionedFileResult = versionedFilesInsert.run(
+                const versionedFileResult = instance.versionedFiles.insert.run(
                     corpusName, corpusRelativePath, contentHash
                 );
 
@@ -41,7 +25,7 @@ export const processFileInsert = ({fileList}: ParamsProcessFileInsert) => {
                 for (const cci of codeContentItems) {
                     const {nodeUri, nodeName, codeContextType, expectedSnippetCount, embedding, embedding32, embedding8} = cci;
 
-                    const cciResult =  codeContextItemsInsert.run(
+                    const cciResult =  instance.codeContextItems.insert.run(
                         nodeUri,
                         nodeName,
                         codeContextType,
@@ -52,7 +36,7 @@ export const processFileInsert = ({fileList}: ParamsProcessFileInsert) => {
 
                     console.log(`cci 插入成功, ID: ${versionedFileId}`);
 
-                    embeddingsInsert.run(embedding32, 'default', cciId);
+                    instance.embeddings.insert.run(embedding32, 'default', cciId);
                 }
 
                 console.log(`${corpusRelativePath} 处理完成`);

@@ -1,13 +1,12 @@
 import vscode from "vscode";
 import {globby} from 'globby';
-import {getDb} from '../sqlite/db';
+import {getDbInstance} from '../sqlite/dbInstance';
 import {getCwd} from "../utils/getCwd";
 import {apiGetCCI} from "../utils/mock";
 import {processFileInsert} from "../sqlite/dbAction";
-import {prepareEmbeddingsCount} from "../sqlite/getPrepared";
 
 const sqliteInsert = async() => {
-    const db = getDb();
+    const {embeddings} = getDbInstance();
     const cwd = getCwd();
 
     const files = await globby('src/api/*.ts', {
@@ -19,7 +18,7 @@ const sqliteInsert = async() => {
 
     processFileInsert(result);
 
-    const countResult = prepareEmbeddingsCount(db).get() as { count: number };
+    const countResult = embeddings.count.get();
     const count = countResult.count;
 
     vscode.window.showInformationMessage(`Records in table: ${count}`);
