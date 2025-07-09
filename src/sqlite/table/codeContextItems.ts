@@ -1,12 +1,18 @@
-import {Database as DatabaseType} from 'better-sqlite3';
+import {Database as DatabaseType, Statement} from 'better-sqlite3';
 
-const prepareCodeContextItems = (db: DatabaseType) => {
+interface CodeContextItemsInstance {
+    insert: Statement<[string, string, number, number, number]>;
+    select: Statement<number[], {node_name: string}>;
+    drop: Statement;
+}
+
+const prepareCodeContextItems = (db: DatabaseType): CodeContextItemsInstance => {
     db.prepare(`
         CREATE TABLE IF NOT EXISTS code_context_items (
             id                     INTEGER PRIMARY KEY AUTOINCREMENT,
             node_uri               TEXT    NOT NULL,
             node_name              TEXT    NOT NULL,
-            code_context_type      TEXT    NOT NULL,
+            code_context_type      INTEGER NOT NULL,
             versioned_file_id      INTEGER NOT NULL,
             expected_snippet_count INTEGER NOT NULL
         )
@@ -28,19 +34,19 @@ const prepareCodeContextItems = (db: DatabaseType) => {
             FROM code_context_items
             WHERE id IN (?, ?, ?, ?, ?)
         `),
-        drop: db.prepare(`DROP TABLE code_context_items;`)
+        drop: db.prepare('DROP TABLE code_context_items;'),
     };
 };
 
-export const getCodeContextItemsInstance = (db: DatabaseType) => {
-    let codeContextItems;
+export const getCodeContextItemsInstance = (db: DatabaseType): CodeContextItemsInstance => {
+    let codeContextItems: CodeContextItemsInstance = null;
     try {
         codeContextItems = prepareCodeContextItems(db);
     }
     catch (error) {
         console.error('创建 code_context_items 失败', error);
         try {
-            db.prepare(`DROP TABLE code_context_items;`).run();
+            db.prepare('DROP TABLE code_context_items;').run();
             codeContextItems = prepareCodeContextItems(db);
         }
         catch (error) {

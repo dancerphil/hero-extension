@@ -1,12 +1,12 @@
-import * as sqliteVec from "sqlite-vec";
+import * as sqliteVec from 'sqlite-vec';
 import {homedir} from 'node:os';
 import {resolve} from 'node:path';
 import {ensureDir} from 'fs-extra';
 import Database from 'better-sqlite3';
 import {Database as DatabaseType} from 'better-sqlite3';
-import {getEmbeddingsInstance} from "./table/embeddings";
-import {getVersionedFilesInstance} from "./table/versionedFiles";
-import {getCodeContextItemsInstance} from "./table/codeContextItems";
+import {getEmbeddingsInstance} from './table/embeddings.js';
+import {getVersionedFilesInstance} from './table/versionedFiles.js';
+import {getCodeContextItemsInstance} from './table/codeContextItems.js';
 
 interface DbInstance {
     db: DatabaseType;
@@ -17,7 +17,7 @@ interface DbInstance {
 
 let dbInstance: DbInstance | null = null;
 
-export const getDbInstance = () => {
+export const getDbInstance = (): DbInstance => {
     if (dbInstance?.db && dbInstance?.db.open) {
         return dbInstance;
     }
@@ -35,10 +35,11 @@ export const getDbInstance = () => {
     const versionedFiles = getVersionedFilesInstance(db);
     const codeContextItems = getCodeContextItemsInstance(db);
 
-    return {
+    dbInstance = {
         db,
         embeddings,
         versionedFiles,
-        codeContextItems
+        codeContextItems,
     };
+    return dbInstance;
 };

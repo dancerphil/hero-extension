@@ -1,6 +1,13 @@
-import {Database as DatabaseType} from 'better-sqlite3';
+import {Database as DatabaseType, Statement} from 'better-sqlite3';
 
-const prepareEmbeddings = (db: DatabaseType) => {
+interface EmbeddingInstance {
+    drop: Statement;
+    count: Statement<unknown[], {count: number}>;
+    insert: Statement<[Float32Array, string, number]>;
+    search: Statement<[Float32Array], {id: number; cci_id: number; distance: number}>;
+}
+
+const prepareEmbeddings = (db: DatabaseType): EmbeddingInstance => {
     db.prepare(`
         CREATE TABLE IF NOT EXISTS embeddings (
             id              INTEGER PRIMARY KEY AUTOINCREMENT,
@@ -10,9 +17,9 @@ const prepareEmbeddings = (db: DatabaseType) => {
         )
     `).run();
     return {
-        drop: db.prepare(`DROP TABLE embeddings;`),
-        count: db.prepare<unknown[], {count: number}>(`SELECT COUNT(*) as count FROM embeddings`),
-        insert: db.prepare<[Float32Array, string, number]>(`
+        drop: db.prepare('DROP TABLE embeddings;'),
+        count: db.prepare('SELECT COUNT(*) as count FROM embeddings'),
+        insert: db.prepare(`
             INSERT INTO embeddings (embedding, embedding_type, cci_id)
             VALUES (vec_f32(?), ?, ?)
         `),
@@ -21,20 +28,19 @@ const prepareEmbeddings = (db: DatabaseType) => {
             FROM embeddings
             ORDER BY distance
             LIMIT 5
-        `)
+        `),
     };
 };
 
-
-export const getEmbeddingsInstance = (db: DatabaseType) => {
-    let embeddings: ReturnType<typeof prepareEmbeddings> | null = null;
+export const getEmbeddingsInstance = (db: DatabaseType): EmbeddingInstance => {
+    let embeddings: EmbeddingInstance = null;
     try {
         embeddings = prepareEmbeddings(db);
     }
     catch (error) {
         console.error('创建 embeddings 失败', error);
         try {
-            db.prepare(`DROP TABLE embeddings;`).run();
+            db.prepare('DROP TABLE embeddings;').run();
             embeddings = prepareEmbeddings(db);
         }
         catch (error) {

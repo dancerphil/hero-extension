@@ -1,8 +1,8 @@
-import vscode from "vscode";
-import {globby} from "globby";
-import {maxBy} from "lodash";
-import {Action} from "../types";
-import {getCwd} from "../utils/getCwd";
+import vscode from 'vscode';
+import {globby} from 'globby';
+import {maxBy} from 'lodash';
+import {Action} from '../types';
+import {getCwd} from '../utils/getCwd';
 
 export const getFilesAction: Action = {
     command: {
@@ -39,5 +39,5 @@ export const getFilesAction: Action = {
         catch (e) {
             vscode.window.showErrorMessage('获取文件失败: ' + (e as Error).message);
         }
-    }
+    },
 };

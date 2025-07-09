@@ -9,6 +9,7 @@
 		],
 		"sourceMap": true,
 		"rootDir": "src",
+		"skipLibCheck": true,
 		"strict": true,   /* enable all strict type-checking options */
 		"strictNullChecks": false,
 		"allowSyntheticDefaultImports": true

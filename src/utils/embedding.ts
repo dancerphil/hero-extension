@@ -2,8 +2,8 @@ import {pipeline} from '@xenova/transformers';
 
 // 加载轻量级嵌入模型 (约 90MB)
 const extractorPromise = pipeline('feature-extraction',
-    'Xenova/all-MiniLM-L6-v2',  // 多语言模型，适合代码
-    { quantized: true }         // 使用量化版本减少内存
+    'Xenova/all-MiniLM-L6-v2', // 多语言模型，适合代码
+    {quantized: true}, // 使用量化版本减少内存
 );
 
 type Embedding = number[];
@@ -15,8 +15,8 @@ export async function embedCodeSnippets(codeSnippets: string[]) {
     const embeddings: Embedding[] = [];
     for (const code of codeSnippets) {
         const output = await extractor(code, {
-            pooling: 'mean',         // 平均池化策略
-            normalize: true          // 归一化向量
+            pooling: 'mean', // 平均池化策略
+            normalize: true, // 归一化向量
         });
         const embedding: Embedding = Array.from(output.data);
         embeddings.push(embedding);

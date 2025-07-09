@@ -1,7 +1,7 @@
 import {getDbInstance} from '../sqlite/dbInstance';
-import vscode from "vscode";
+import vscode from 'vscode';
 
-const sqliteDrop = async() => {
+const sqliteDrop = async () => {
     const {db, embeddings, versionedFiles, codeContextItems} = getDbInstance();
 
     embeddings.drop.run();

@@ -1,11 +1,11 @@
-import vscode from "vscode";
+import vscode from 'vscode';
 import {globby} from 'globby';
 import {getDbInstance} from '../sqlite/dbInstance';
-import {getCwd} from "../utils/getCwd";
-import {apiGetCCI} from "../utils/mock";
-import {processFileInsert} from "../sqlite/dbAction";
+import {getCwd} from '../utils/getCwd';
+import {apiGetCCI} from '../utils/mock';
+import {processFileInsert} from '../sqlite/dbAction';
 
-const sqliteInsert = async() => {
+const sqliteInsert = async () => {
     const {embeddings} = getDbInstance();
     const cwd = getCwd();
 
@@ -14,7 +14,7 @@ const sqliteInsert = async() => {
         cwd,
     });
 
-    const result = await apiGetCCI({ files });
+    const result = await apiGetCCI({files});
 
     processFileInsert(result);
 

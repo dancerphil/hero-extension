@@ -1,11 +1,11 @@
-import {cosineSimilarity, embedCodeSnippets} from "../utils/embedding";
-import vscode from "vscode";
+import {cosineSimilarity, embedCodeSnippets} from '../utils/embedding';
+import vscode from 'vscode';
 
 const testEmbedding = async () => {
     const codeExamples = [
         `function sum(a, b) { return a + b; }`,
         `const multiply = (x, y) => x * y;`,
-        `class Calculator { add(n1, n2) { return n1 + n2 } }`
+        `class Calculator { add(n1, n2) { return n1 + n2 } }`,
     ];
 
     const embeddings = await embedCodeSnippets(codeExamples);
@@ -15,11 +15,10 @@ const testEmbedding = async () => {
 
     const [embed1, embed2] = await embedCodeSnippets([
         'function add(a, b) { return a + b }',
-        'function sum(x, y) { return x + y }'
+        'function sum(x, y) { return x + y }',
     ]);
 
     vscode.window.showInformationMessage(`相似度: ${cosineSimilarity(embed1, embed2).toFixed(4)}`);
-
 };
 
 export const embeddingAction = {

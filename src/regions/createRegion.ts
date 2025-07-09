@@ -12,5 +12,5 @@ export const createRegion = <T>(initialValue?: T) => {
                 value = newValue;
             }
         },
-    }
-}
+    };
+};

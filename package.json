@@ -43,8 +43,10 @@
     "watch": "tsc -watch -p ./",
     "pretest": "yarn run compile && yarn run lint",
     "lint": "eslint src",
+    "lint-type": "tsc --noEmit",
     "test": "vscode-test",
-    "rebuild": "electron-rebuild --version 35.5.1 -f -w better-sqlite3"
+    "rebuild": "electron-rebuild --version 35.5.1 -f -w better-sqlite3",
+    "prepare": "husky"
   },
   "dependencies": {
     "@xenova/transformers": "^2.17.2",
@@ -55,6 +57,9 @@
     "sqlite-vec": "^0.1.7-alpha.2"
   },
   "devDependencies": {
+    "@eslint/compat": "^1.3.1",
+    "@hero-u/eslint-config": "^0.1.0",
+    "@stylistic/eslint-plugin": "^5.1.0",
     "@types/better-sqlite3": "^7.6.13",
     "@types/fs-extra": "^11.0.4",
     "@types/lodash": "^4.17.18",
@@ -67,6 +72,10 @@
     "@vscode/test-electron": "^2.5.2",
     "electron-rebuild": "^3.2.9",
     "eslint": "^9.25.1",
-    "typescript": "^5.8.3"
+    "eslint-plugin-react": "^7.37.5",
+    "eslint-plugin-react-hooks": "^5.2.0",
+    "husky": "^9.1.7",
+    "typescript": "^5.8.3",
+    "typescript-eslint": "^8.36.0"
   }
 }
