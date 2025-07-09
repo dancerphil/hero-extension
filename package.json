@@ -39,8 +39,8 @@
   "main": "./out/extension.js",
   "scripts": {
     "vscode:prepublish": "yarn run compile",
-    "compile": "tsc -p ./",
-    "watch": "tsc -watch -p ./",
+    "compile": "tsc",
+    "watch": "tsc -watch",
     "pretest": "yarn run compile && yarn run lint",
     "lint": "eslint src",
     "lint-type": "tsc --noEmit",
@@ -77,5 +77,7 @@
     "husky": "^9.1.7",
     "typescript": "^5.8.3",
     "typescript-eslint": "^8.36.0"
-  }
+  },
+  "repository": "git@github.com:dancerphil/hero-extension.git",
+  "license": "MIT"
 }
