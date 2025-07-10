@@ -1,3 +1,3 @@
-import {configs} from "@hero-u/eslint-config";
+import {typescriptConfig} from '@hero-u/eslint-config';
 
-export default configs;
+export default typescriptConfig;

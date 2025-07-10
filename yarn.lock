@@ -90,10 +90,10 @@
   resolved "https://registry.yarnpkg.com/@gar/promisify/-/promisify-1.1.3.tgz#555193ab2e3bb3b6adc3d551c9c030d9e860daf6"
   integrity sha512-k2Ty1JcVojjJFwrg/ThKi2ujJ7XNLYaFGNB/bWT9wGR+oSMJHMa5w+CUq6p/pVrKeNNgA7pCqEcjSnHVoqJQFw==
 
-"@hero-u/eslint-config@^0.1.0":
-  version "0.1.0"
-  resolved "https://registry.yarnpkg.com/@hero-u/eslint-config/-/eslint-config-0.1.0.tgz#28304142f1c752d327cedf84b1b181fcc1eb5ed7"
-  integrity sha512-7IJAOK018q0n4vY4LeSl8Xk1qiavCbuD6A21WCBJ6HIxodRZbh5ggEFQOPMB/0Hf+AY+BHtkbf0oew8lkHjTew==
+"@hero-u/eslint-config@^0.1.1":
+  version "0.1.1"
+  resolved "https://registry.yarnpkg.com/@hero-u/eslint-config/-/eslint-config-0.1.1.tgz#d23abef85bc204bd8778bac16848d4294e9cee94"
+  integrity sha512-hUr/YeIirxTYrgBCCtYhNORnSRVlKTzeeQE/w+UdtTEs3HRU2jdfjD0cE24LNcAZKHKLcRoAZ/2vOyZYrXbQnw==
 
 "@huggingface/jinja@^0.2.2":
   version "0.2.2"
